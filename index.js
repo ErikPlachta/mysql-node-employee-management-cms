@@ -1,7 +1,9 @@
 //------------------------------------------------------------------------------
-//-- Globals
+//-- Database Stuff
+
 // Import and require mysql2
 const mysql = require('mysql2');
+
 
 // Connect to database
 const db = mysql.createConnection(
@@ -30,6 +32,3 @@ db.query(`DELETE FROM books WHERE id = ?`, (err, result) => {
 db.query('SELECT * FROM books', function (err, results) {
   console.log(results);
 });
-
-
-
