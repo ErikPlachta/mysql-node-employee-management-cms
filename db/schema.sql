@@ -12,7 +12,7 @@ USE employee_db;
 -- Adding a table to database
 CREATE TABLE Department (
     id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    department_name VARCHAR(30) NOT NULL
+    name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Role (
