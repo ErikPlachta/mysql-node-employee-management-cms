@@ -1,7 +1,6 @@
+workspace.code-workspace
 node_modules
 package-lock.json
 .vscode
 .DS_Store
 _ARCHIVE
-routes
-__tests__
