@@ -13,22 +13,36 @@ const db = mysql.createConnection(
     user: 'manager',
     // MySQL password
     password: 'My-Manager-Password1!',
-    database: 'inventory_db'
+    database: 'employee_db'
   },
-  console.log(`Connected to the inventory_db database.`)
+  console.log(`Connected to the employee_db database.`)
 );
 
-// Query database
-let deletedRow = 2;
+//------------------------------------------------------------------------------
+//-- Queries
 
-db.query(`DELETE FROM books WHERE id = ?`, (err, result) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(result)
-});
+//-- Delete with wildcard to allow user param input
+getEmployees = function() {
+  return db.query(`SELECT * FROM Employee`, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result)
+  });
+};
 
-// Query database
-db.query('SELECT * FROM books', function (err, results) {
-  console.log(results);
-});
+// Get all Departments with all values
+getDepartments = function() {
+  return db.query('SELECT * FROM Department', function (err, results) {
+      console.log(results);
+  });
+};
+
+// Get all Roles with all values
+getRoles = function() {
+  return db.query('SELECT * FROM Role', function (err, results) {
+    console.log(results);
+  });
+};
+
+console.log(getEmployees())

@@ -11,7 +11,6 @@ const Database = require('../lib/db');
 test('Creating a new database and removing existing if exists', () => {
     
     //-- make employee to test
-    const database = new Database();
 
     //-- what it should be
     expect(database.getEmployees()).toBeDefined();
