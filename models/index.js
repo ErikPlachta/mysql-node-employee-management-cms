@@ -3,37 +3,22 @@ const Employee = require('./Employee');
 const Department = require('./Department');
 const Role = require('./Role');
 
-
+//------------------------------------------------------------------------------
 //-- Sequelize Table Management
 
-// //-- Setting up Department to share it's ID as foreign key to role, field department_id
-// Department.hasOne(Role, {
-//   foreignKey: 'department_id'
-// });
+//-- Department holds id, but Role holds the value as foreign key in department_id
+Department.hasMany(Role); // -- Roles may share department ID as foreign Key
+Role.belongsTo(Department, { //-- That shared id is called department_id in Role
+  foreignKey: "department_id"
+});
 
-// Role.belongsTo(Department, {
-//   foreignKey: 'department_id'
-// });
+//-- Role holds id, and Employee holds the value as foreign key in role_id
+Role.hasMany(Employee); //-- role shares primary key as foreign key
 
+Employee.belongsTo(Role, { //-- employee takes that ID and assigns to role_id
+  foreignKey: "role_id",
+});
 
-// //-- Setting up role to share ID as foreign key to employee, field value role_id
-// Role.hasOne(Employee, {
-//   foreignKey: 'role_id'
-// });
-
-// Employee.belongsTo(Department, {
-//   foreignKey: 'role_id'
-// });
-
-// //-- Setting up employee manager_id to share foreignKey connection to manager_id
-// Employee.hasOne(Employee, {
-//   foreignKey: 'manager_id'
-// });
-
-// Employee.belongsTo(Employee, {
-//   foreignKey: 'manager_id'
-// });
-
-
+//------------------------------------------------------------------------------
 //-- Exports updated tables
 module.exports = { Employee, Department, Role };

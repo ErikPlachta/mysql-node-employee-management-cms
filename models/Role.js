@@ -23,7 +23,11 @@ Role.init(
     },
     department_id: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'department', //-- table to get key from
+        key: 'id', //-- column in department table
+      },
     }
   },
   {

@@ -23,19 +23,20 @@ Employee.init(
     },
     role_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
-      // references: {
-      //   model: 'role',
-      //   key: 'id'
-      // }
+      allowNull: false,
+      references: {
+        model: 'role',
+        key: 'id'
+      }
     },
     manager_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
-      // references: {
-      //   model: 'employee',
-      //   key: 'id'
-      // }
+      allowNull: true,
+      association: {
+        model: 'employee',
+        key: 'id',
+        // constraints: false
+      }
     }
   },
   {
