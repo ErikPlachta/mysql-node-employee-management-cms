@@ -9,6 +9,8 @@ const db = require('../../config/connection')
 //------------------------------------------------------------------------------
 //-- ROUTES
 
+
+//-- Get ALL employees
 router.get('/', async (req, res) => {
     try {
         // Query database for ALL employees with all columns
@@ -22,7 +24,59 @@ router.get('/', async (req, res) => {
     catch (err) {
       res.status(500).json(err);
     }
-  });
+});
+
+//-- Get employee by ID
+router.get('/:id', async (req, res) => {
+  try {
+      // Query database for ALL employees with all columns
+    db.query(`SELECT * FROM employee WHERE id = ${req.params.id}`, function (err, results) {
+      if (err) {
+        res.status(500).json(err);
+      }
+      res.status(200).json(results);
+    });
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+//-- create an employee
+// TODO:: 01/29/2022 #EP | Add this query
+router.post('/', async (req, res) => {
+  try {
+      // Query database for ALL employees with all columns
+    db.query('SELECT * FROM employee', function (err, results) {
+      if (err) {
+        res.status(500).json(err);
+      }
+      res.status(200).json(results);
+    });
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+//-- Delete an employee by ID
+// TODO:: 01/29/2022 #EP | Add this query
+router.delete('/:id', async (req, res) => {
+  try {
+      // Query database for ALL employees with all columns
+    db.query(`DELETE FROM employee where id = ?`, function (err, results) {
+      if (err) {
+        res.status(500).json(err);
+      }
+      res.status(200).json(results);
+    });
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
 
   
 
