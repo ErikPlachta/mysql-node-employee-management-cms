@@ -2,7 +2,7 @@
 //-- IMPORTS
 
 //-- connect to SQL database
-const sequelize = require('../config/connection');
+const sequelize = require('./connection');
 
 //-- Grab database Table models
 const { Department, Role, Employee } = require('../models');

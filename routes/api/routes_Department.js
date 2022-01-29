@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
       // Query database for ALL employees with all columns
-    db.query('SELECT * FROM department where id=?', function (err, results) {
+    db.query(`SELECT * FROM department where id= ${req.params.id}`, function (err, results) {
       if (err) {
         res.status(500).json(err);
       }
