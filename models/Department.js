@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../seeds/connection');
 
 //-- Creating Employee class, and extending Model from Class Sequelize
-class Department extends Model {}
+class Department extends Model {};
 
 //-- Creating Sequelize table
 Department.init(

@@ -46,9 +46,16 @@ router.get('/:id', async (req, res) => {
 //-- create an employee
 // TODO:: 01/29/2022 #EP | Add this query
 router.post('/', async (req, res) => {
+  // console.log(`Received post request: ${req.body}`)
   try {
-      // Query database for ALL employees with all columns
-    db.query('SELECT * FROM employee', function (err, results) {
+    // console.log(`Received payload: ${JSON.stringify(req)}`)
+    var id = req.body.id;
+    var first_name = req.body.first_name;
+    var last_name = req.body.last_name;
+    var role_id = req.body.role_id;
+    var manager_id = req.body.manager_id;
+    // Query database for ALL employees with all columns
+    db.query(`INSERT INTO employee (id, first_name, last_name,role_id, manager_id) VALUES (${id}, '${first_name}', '${last_name}', ${role_id}, ${manager_id});`, function (err, results) {
       if (err) {
         res.status(500).json(err);
       }
@@ -56,6 +63,7 @@ router.post('/', async (req, res) => {
     });
   }
   catch (err) {
+    console.log("Catch Error.", err)
     res.status(500).json(err);
   }
 });

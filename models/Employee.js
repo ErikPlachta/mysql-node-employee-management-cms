@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../seeds/connection');
 
 //-- Creating Employee class, and extending Model from Class Sequelize
-class Employee extends Model {}
+class Employee extends Model {};
 
 //-- Creating Sequelize table
 Employee.init(
@@ -32,11 +32,6 @@ Employee.init(
     manager_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      association: {
-        model: 'employee',
-        key: 'id',
-        // constraints: false
-      }
     }
   },
   {
