@@ -8,9 +8,9 @@ const sequelize = require('../config/connection');
 const { Department, Role, Employee } = require('../models');
 
 //-- Grab seed data to build a seed database
-const seed_Departments = require('./seed_Departments.json');
-const seed_Roles = require('./seed_Roles.json');
-const seed_Employees = require('./seed_Employees.json');
+const seed_Departments = require('./seed_Department.json');
+const seed_Roles = require('./seed_Role.json');
+const seed_Employees = require('./seed_Employee.json');
 
 
 //------------------------------------------------------------------------------
