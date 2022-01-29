@@ -6,10 +6,10 @@ const routes_Employee = require('./routes_Employee');
 const routes_Department = require('./routes_Department');
 const routes_Role = require('./routes_Role');
 
-//-- give Routes to ROuter
-router.use('/employees', routes_Employee);
+// //-- give Routes to ROuter
 router.use('/departments', routes_Department);
 router.use('/roles', routes_Role);
+router.use('/employees', routes_Employee);
 
 //-- Return to ./routes/index.js that sends to servers.js in root
 module.exports = router;
