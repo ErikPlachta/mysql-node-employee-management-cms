@@ -13,6 +13,6 @@ test('Creating a new database and removing existing if exists', () => {
     //-- make employee to test
 
     //-- what it should be
-    expect(database.getEmployees()).toBeDefined();
+    expect(Database.getEmployees()).toBeDefined();
     
 });
