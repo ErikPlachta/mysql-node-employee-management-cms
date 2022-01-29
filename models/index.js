@@ -14,10 +14,11 @@ Role.belongsTo(Department, { //-- That shared id is called department_id in Role
 
 //-- Role holds id, and Employee holds the value as foreign key in role_id
 Role.hasMany(Employee); //-- role shares primary key as foreign key
-
 Employee.belongsTo(Role, { //-- employee takes that ID and assigns to role_id
   foreignKey: "role_id",
 });
+
+//TODO:: 01/29/2022 #EP || Add association between employee ID and maanger_id in emp table Model
 
 //------------------------------------------------------------------------------
 //-- Exports updated tables

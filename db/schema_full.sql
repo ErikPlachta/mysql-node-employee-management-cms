@@ -31,6 +31,6 @@ CREATE TABLE Employee (
 );
 
 -- print to console
-DESCRIBE Department;
-DESCRIBE Role;
-DESCRIBE Employee;
+-- DESCRIBE Department;
+-- DESCRIBE Role;
+-- DESCRIBE Employee;
