@@ -1,0 +1,34 @@
+[
+    {
+      "id": 1,
+      "name": "Operations"
+    },
+    {
+        "id": 2,
+        "name": "IT"
+    },
+    {
+        "id": 3,
+        "name": "Customer Success"
+    },
+    {
+        "id": 4,
+        "name": "Sales"
+    },
+    {
+        "id": 5,
+        "name": "Marketing"
+    },
+    {
+        "id": 6,
+        "name": "Development"
+    },
+    {
+        "id": 7,
+        "name": "Fulfillment"
+    }
+    {
+        "id": 8,
+        "name": "Accounting"
+    }
+]

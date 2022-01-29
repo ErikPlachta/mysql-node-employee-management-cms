@@ -1,8 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
+//-- Creating Employee class, and extending Model from Class Sequelize
 class Employee extends Model {}
 
+//-- Creating Sequelize table
 Employee.init(
   {
     id: {
@@ -11,32 +13,33 @@ Employee.init(
       primaryKey: true,
       autoIncrement: true
     },
-    title: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    author: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    isbn: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    pages: {
+    role_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      references: {
+        model: 'role',
+        key: 'id'
+      }
     },
-    edition: {
+    manager_id: {
       type: DataTypes.INTEGER,
-      defaultValue: 1
-    },
-    is_paperback: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true
+      references: {
+        model: 'employee',
+        key: 'id'
+      }
     }
   },
   {
+    hooks: {
+
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -45,4 +48,5 @@ Employee.init(
   }
 );
 
-module.exports = Book;
+//-- returning table
+module.exports = Employee;

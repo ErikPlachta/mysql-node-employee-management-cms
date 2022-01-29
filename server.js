@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-//-- imports
+//-- importing to prepare to build seed database within database
 
 //-- Running server
 const express = require('express');
