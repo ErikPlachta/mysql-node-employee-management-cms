@@ -1,18 +1,18 @@
-//-- IMPORTS
-const Sequelize = require('sequelize');
-require('dotenv').config();
+//-- Imported by anything that uses SQL Database connection
 
-//-- MAKE sequelize obj to play as ORM
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+// Import and require mysql2
+const mysql = require('mysql2');
+const db = mysql.createConnection(
   {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-  }
+    host: 'localhost', 
+    user: 'root', // MySQL username,
+    password: 'Password1!',  // MySQL password
+    database: 'employee_db'
+  },
+  console.log(`Connected to the inventory_db database.`)
 );
 
+
+
 //-- exporting created sequelize obj
-module.exports = sequelize;
+module.exports = db;
