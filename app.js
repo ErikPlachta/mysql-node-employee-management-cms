@@ -17,10 +17,11 @@ const { getEmployee, getEmployees, putEmployee, postEmployee, deleteEmployee } =
 
 function test_Put(){
   var data = {"last_name" : "dd!"};
+  var id = 1;
   // data = JSON.parse(data);
-  putEmployee(1, data)
+  putEmployee(id, data)
   .then( results => console.log(`Results of Query: ${results}`))
-  .then(() => getEmployee(1) )
+  .then(() => getEmployee(id) )
   .then( results => console.log(`Updated: ${results}`))
 }
 
@@ -39,14 +40,12 @@ function test_Post(){
 
 function test_Delete(){
   //-- sending without an id, so auto populates one
-  var data = {
-    "first_name" : "Random",
-    "last_name" : "Named Person",
-    "role_id" : "2",
-    "manager_id" : "1"
-  };
-  // data = JSON.parse(data);
-  postEmployee(data)
+  var id = 1;
+  
+  deleteEmployee(id)
   .then( results => console.log(`Results of Query: ${results}`))
+  .then(() => getEmployee(id) )
+  .then( results => console.log(`Updated: ${results}`))
 }
 
+test_Delete();
