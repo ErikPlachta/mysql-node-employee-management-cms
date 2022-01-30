@@ -48,6 +48,18 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // console.log(`Received post request: ${req.body}`)
   try {
+    
+    var request = req.body;
+    // request.forEach( ([key, value]) => {
+    //   console.log("hi")
+    // });
+
+    for (var key in request){
+      console.log(`${key} : ${request[key]}`);
+    }
+    // for( i=0; i <= request.length; i++ ){
+    //   console.log(i)
+    // }
     // console.log(`Received payload: ${JSON.stringify(req)}`)
     var id = req.body.id;
     var first_name = req.body.first_name;
@@ -55,7 +67,8 @@ router.post('/', async (req, res) => {
     var role_id = req.body.role_id;
     var manager_id = req.body.manager_id;
     // Query database for ALL employees with all columns
-    db.query(`INSERT INTO employee (id, first_name, last_name,role_id, manager_id) VALUES (${id}, '${first_name}', '${last_name}', ${role_id}, ${manager_id});`, function (err, results) {
+    db.query(`INSERT INTO employee (id, first_name, last_name,role_id, manager_id) VALUES (${id}, '${first_name}', '${last_name}', ${role_id}, ${manager_id});`,
+    function (err, results) {
       if (err) {
         res.status(500).json(err);
       }
