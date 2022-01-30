@@ -1,0 +1,118 @@
+[
+    {
+      "id": 1,
+      "title": "COO",
+      "salary" : 150000,
+      "department_id" : 1
+    },
+    {
+        "id": 2,
+        "title": "CMO",
+        "salary" : 100000,
+        "department_id" : 5
+    },
+    {
+        "id": 3,
+        "title": "CFO",
+        "salary" : 100000,
+        "department_id" : 8
+    },
+    {
+        "id": 4,
+        "title": "CIO",
+        "salary" : 100000,
+        "department_id" : 2
+    },
+    {
+        "id": 5,
+        "title": "CTO",
+        "salary" : 100000,
+        "department_id" : 2
+    },
+    {
+        "id": 6,
+        "title": "CCO",
+        "salary" : 100000,
+        "department_id" : 5
+    },
+    {
+        "id": 7,
+        "title": "CEO",
+        "salary" : 150000,
+        "department_id" : 1
+    },
+    {
+        "id": 8,
+        "title": "IT Eningeer",
+        "salary" : 50000,
+        "department_id" : 2
+    },
+    {
+        "id": 9,
+        "title": "IT Department Manager",
+        "salary" : 80000,
+        "department_id" : 2
+    },
+    {
+        "id": 10,
+        "title": "Marketing Engineer",
+        "salary" : 50000,
+        "department_id" : 5
+    },
+    {
+        "id": 11,
+        "title": "Marketing Department Manager",
+        "salary" : 80000,
+        "department_id" : 5
+    },
+    {
+        "id": 12,
+        "title": "Sales Represenative",
+        "salary" : 50000,
+        "department_id" : 4
+    },
+    {
+        "id": 13,
+        "title": "Sales Department Manager",
+        "salary" : 80000,
+        "department_id" : 4
+    },
+    {
+        "id": 14,
+        "title": "Customer Success Represenative",
+        "salary" : 50000,
+        "department_id" : 3
+    },
+    {
+        "id": 15,
+        "title": "Customer Success Department Manager",
+        "salary" : 80000,
+        "department_id" : 3
+    },
+    
+    {
+        "id": 16,
+        "title": "Fulfillment Represenative",
+        "salary" : 50000,
+        "department_id" : 7
+    },
+    {
+        "id": 17,
+        "title": "Fulfillment Department Manager",
+        "salary" : 80000,
+        "department_id" : 7
+    },
+    
+    {
+        "id": 18,
+        "title": "Accounting Represenative",
+        "salary" : 50000,
+        "department_id" : 8
+    },
+    {
+        "id": 19,
+        "title": "Accounting Department Manager",
+        "salary" : 80000,
+        "department_id" : 8
+    }
+]
