@@ -31,10 +31,11 @@ const {
 //------------------------------------------------------------------------------
 //-- IMPORTS - Other
 
+//-- For Prompting
 const inquirer = require('inquirer');
 
-
-
+//-- For printing table results
+const cTable = require('console.table');
 //------------------------------------------------------------------------------
 //-- PROMPTING
 
@@ -86,17 +87,33 @@ MAIN MENU:
   };  //-- END OF _get_MainMenu
 
   
-  _getDepartments = () =>  { 
-    
-    return results;
+  _getDepartments = async () => {  
+    var response = await getDepartments()
+    .then(response => {
+      return response;
+    })
+    .catch(err => console.log(err));
+    return response;
   }
 
-  _getRoles = () => {
-
+  _getRoles = async () => {
+    var response = await getRoles()
+    .then(response => {
+      return response;
+    })
+    .catch(err => console.log(err));
+    return response;
   }
-  _getEmployees = () => {
 
-  }
+  _getEmployees = async () => {
+    var response = await getEmployees()
+    .then(response => {
+      return response;
+    })
+    .catch(err => console.log(err));
+    return response;
+  };
+
   _postDepartment = (data) => {
 
   }
@@ -123,7 +140,7 @@ MAIN MENU:
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   //-- Primary function that runs the app
-  _manage_Employees = () => { 
+  _manage_Employees = async function() { 
 
   
     //-- Get user specific info
@@ -139,7 +156,12 @@ MAIN MENU:
         return choice;
       })
       .then(choice => {
-        console.log((this.mainMenu[choice])());
+        return (this.mainMenu[choice])();
+      })
+      .then(results => {
+        
+        console.table(JSON.parse(results))
+        
       })
       
 
