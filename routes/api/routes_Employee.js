@@ -50,42 +50,24 @@ router.put('/:id', async (req, res) => {
   try {
     
     //-- Deconstructing to make code easier to read and use
-    
-    var results = {};
-    
     const id = req.params.id; //-- get ID from url
     const request = req.body; //-- pull payload
     const length = Object.keys(request).length; //-- get number of things to update
-		
-    //-- if received more than 1 change request
+
+    //-- if received more than 1 change request, abort request
     if (length > 1 ){
-      throw err;
+      throw `ERROR: Update request rejected. Received ${length} change requests, only 1 is allowed. Please try again.`;
     }
     
-    
-    var set_String = null;
-    console.log(`//-- Received ${length} results... `);
+    //-- Used to hold query built in below for loop
+    var query_String = null;
 
+    //-- Extract payload and build query string
     for( var key in request) {
-
-      set_String = `${key} = '${request[key]}'`;
+      query_String = `UPDATE employee SET ${key} = '${request[key]}' WHERE id = ${id};`;
     }
     
-  
-    
-    
-    console.log(set_String)
-    // ;SELECT * FROM employee WHERE manager_id = ?";
-    // var query_String = `SELECT first_name FROM employee WHERE id = ${id} AND SELECT last_name FROM employee where id = ${id};`;
-
-    //-- Basic query that I know works
-    // var query_String = `SELECT * FROM employee WHERE id = ${id};`;
-
-    //-- String to hold an UPDATE query. Using ? wildcard, so modular
-    var query_String = `UPDATE employee SET ${key} = '${request[key]}' WHERE id = ${id};`;
-    
-    // db.query(`UPDATE employee set ${values});`,
-    // db.query(`SELECT first_name FROM employee WHERE id = ${id};` `SELECT last_name FROM employee WHERE id = ${id};`,
+    //-- Attempt to update database with provided value
     db.query(query_String, 
       function (err, results) {
         if (err) {
