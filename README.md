@@ -43,6 +43,8 @@ Once you've got Node.js installed locally, run `npm -i` in the app directory.
 
 - [mysql2](https://www.npmjs.com/package/mysql2) is used to allow Node to work
 with a local MySQL database.
+- [sequelize](https://sequelize.org/) is being used building seed data.
+- [dotenv]() is being used to allow access to local `.env` file, which contains database info.
 - [inquirer](https://www.npmjs.com/package/inquirer) is used to manage user input
 and provide a CLI.
 - [console.table](https://www.npmjs.com/package/console.table) is used to provide

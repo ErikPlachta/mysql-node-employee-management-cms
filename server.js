@@ -9,9 +9,6 @@ const routes = require('./routes');
 //TODO:: 01/29/2022 #EP || Remove Sequelize once done learning
 // const sequelize = require('./config/connection'); 
 
-// Import and require mysql2
-const mysql = require('mysql2');
-
 //------------------------------------------------------------------------------
 //-- Setup Express
 const app = express();
