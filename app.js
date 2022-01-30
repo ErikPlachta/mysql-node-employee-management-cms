@@ -1,60 +1,34 @@
 //-- IMPORTS
-const fetch = require('node-fetch');
-// const fetch = (url:RequestInfo, init?:RequestInit) => import('node-fetch').then(module => module.default(url, init));
 
-//-- https://www.npmjs.com/package/node-fetch
-//-- https://stackabuse.com/making-http-requests-in-node-js-with-node-fetch/
-// const fetch = import('node-fetch'); //-- to allow fetching to Express Server
-// import fetch from 'node-fetch';
-// const fetch = require("node-fetch");
+// const {getEmployee, putEmployee} = require('./lib/queries.js');
+const { getEmployee, getEmployees, putEmployee, postEmployee, deleteEmployee } =  require('./lib/queries_Employee.js');
 
+//-- Getting an employee
+// getEmployee(1)
+// .then( results => console.log(`results: ${results}`))
 
-// fetch('https://google.com')
-//     .then(res => res.text())
-//     .then(text => console.log(text));
+// getEmployees()
+// .then( results => console.log(`results: ${results}`))
 
 
 
 
 
-// const url = 'http://127.0.0.1:3001/api/employee'
 
+function test_Put(){
+  var data = {"last_name" : "dd!"};
+  // data = JSON.parse(data);
+  putEmployee(1, data)
+  .then( results => console.log(`Results of Query: ${results}`))
+  .then(() => getEmployee(1) )
+  .then( results => console.log(`Updated: ${results}`))
+}
 
-async function getEmployee(id){
-  
-  console.log(id)
-  
-  if(id != undefined) {
-    const response = await fetch(`http://127.0.0.1:3001/api/employees/${id}`)
-      .then(response => response.json())
-      // .then(data => console.log(data));
-      .then(json => {
-        // console.log(json);
-        return JSON.stringify(json);
-      })
-      .catch(err => console.log(err));
-    return response;
-  } 
-  
-  else {
-    const response = await fetch(`http://127.0.0.1:3001/api/employees/`)
-    .then(response => response.json())
-    .then(data => { return JSON.stringify(data) });
-    return response;
-  }
-  
-};
-
-
-// async function getEmployee(){
-//   fetch(`http://127.0.0.1:3001/api/employees/`)
-//     .then(response => response.json())
-//     .then(data => console.log(data));
-// };
-
-
-// getEmployee()
-// .then(() => getEmployee(1));
-
-getEmployee()
-.then( results => console.log(`results: ${results}`))
+function test_Post(){
+  var data = {"last_name" : "dd!"};
+  // data = JSON.parse(data);
+  putEmployee(1, data)
+  .then( results => console.log(`Results of Query: ${results}`))
+  .then(() => getEmployee(1) )
+  .then( results => console.log(`Updated: ${results}`))
+}
