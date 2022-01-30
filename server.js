@@ -12,7 +12,7 @@ const routes = require('./routes');
 //------------------------------------------------------------------------------
 //-- Setup Express
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || process.env.MY_PORT;
 
 //-- make sure can read JSON and manage properly
 app.use(express.json());

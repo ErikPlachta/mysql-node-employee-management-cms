@@ -1,4 +1,5 @@
-//-- IMPORTS
+//------------------------------------------------------------------------------
+//-- IMPORTS FOR EXPRESS SERVER MANAGEMENT
 
 //-- Importing CRUD functions for Employees
 const { 
@@ -27,7 +28,8 @@ const {
   deleteDepartment
 } =  require('./lib/queries_Department.js');
 
+//------------------------------------------------------------------------------
+//-- IMPORTS
 
-getDepartment(1).then(results => {
-  console.log(results)
-})
+getDepartments()
+.then(console.log)
