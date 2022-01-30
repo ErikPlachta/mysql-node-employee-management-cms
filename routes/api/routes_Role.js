@@ -94,16 +94,25 @@ router.post('/', async (req, res) => {
     var salary = req.body.salary;
     var department_id = req.body.department_id;
 
-    // Query database for ALL employees with all columns
-    // db.query('SELECT * FROM role', function (err, results) {
-    db.query(`INSERT INTO role (id, title, salary, department_id) VALUES (${id}, "${title}", ${salary},${department_id});`,
-    function (err, results) {  
-      if (err) {
-        res.status(500).json(err);
-      }
-        res.status(200).json(results);
-      }
-    );
+    if(id) {
+      db.query(`INSERT INTO role (id, title, salary, department_id) VALUES (${id}, "${title}", ${salary},${department_id});`,
+      function (err, results) {  
+        if (err) {
+          res.status(500).json(err);
+        }
+          res.status(200).json(results);
+        }
+      );
+    } else {
+      db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${title}", ${salary},${department_id});`,
+      function (err, results) {  
+        if (err) {
+          res.status(500).json(err);
+        }
+          res.status(200).json(results);
+        }
+      );
+    }
   }
   catch (err) {
     res.status(500).json(err);

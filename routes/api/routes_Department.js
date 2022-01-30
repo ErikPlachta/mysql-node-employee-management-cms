@@ -91,17 +91,26 @@ router.post('/', async (req, res) => {
     //-- grab payload
     var id = req.body.id;
     var name = req.body.name;
-    // console.log("Adding department...")
-    // Query database for ALL employees with all columns
-    // db.query('SELECT * FROM department', function (err, results) {
+    if(id) {
       db.query(`INSERT INTO department (id, name) VALUES (${id}, "${name}");`,
       function (err, results) {
         if (err) {
           res.status(500).json(err);
         }
         res.status(200).json(results);
-      }
-    );
+      });
+    }
+    //-- auto assign an ID
+    else {
+      db.query(`INSERT INTO department (name) VALUES ("${name}");`,
+      function (err, results) {
+        if (err) {
+          res.status(500).json(err);
+        }
+        res.status(200).json(results);
+      });
+
+    }
   }
   catch (err) {
     res.status(500).json(err);

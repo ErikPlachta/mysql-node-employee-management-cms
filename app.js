@@ -25,10 +25,28 @@ function test_Put(){
 }
 
 function test_Post(){
-  var data = {"last_name" : "dd!"};
+  //-- sending without an id, so auto populates one
+  var data = {
+    "first_name" : "Random",
+    "last_name" : "Named Person",
+    "role_id" : "2",
+    "manager_id" : "1"
+  };
   // data = JSON.parse(data);
-  putEmployee(1, data)
+  postEmployee(data)
   .then( results => console.log(`Results of Query: ${results}`))
-  .then(() => getEmployee(1) )
-  .then( results => console.log(`Updated: ${results}`))
 }
+
+function test_Delete(){
+  //-- sending without an id, so auto populates one
+  var data = {
+    "first_name" : "Random",
+    "last_name" : "Named Person",
+    "role_id" : "2",
+    "manager_id" : "1"
+  };
+  // data = JSON.parse(data);
+  postEmployee(data)
+  .then( results => console.log(`Results of Query: ${results}`))
+}
+
