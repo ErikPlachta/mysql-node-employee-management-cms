@@ -42,25 +42,57 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+//-- UPDATE an employee
+router.put('/:id', async (req, res) => {
+  // console.log(`Received post request: ${req.body}`)
+  try {
+    
+    var id = req.params.id;
+    var request = req.body;
 
-//-- create an employee
-// TODO:: 01/29/2022 #EP | Add this query
+    //-- grabbing what was sent in
+    var first_name = request.first_name;
+		var last_name = request.last_name;
+    var role_id = request.role_id;
+		var manager_id = request.manager_id;
+
+		
+    // request.forEach( ([key, value]) => {
+    //   console.log("hi")
+    // });
+    var query_Holder = null;
+    console.log("//-- Received: ")
+    for (var key in request){
+      console.log(`//--\t ${key} : ${request[key]}`);
+      // console.log(`//-- UPDATE employee SET ${key} = ${request[key]} WHERE id = ${id}`);
+    }
+    
+    // ;SELECT * FROM employee WHERE manager_id = ?";
+    // var query_String = `SELECT first_name FROM employee WHERE id = ${id} AND SELECT last_name FROM employee where id = ${id};`;
+    var query_String = `SELECT * FROM employee WHERE id = ${id};`;
+    
+    // db.query(`UPDATE employee set ${values});`,
+    // db.query(`SELECT first_name FROM employee WHERE id = ${id};` `SELECT last_name FROM employee WHERE id = ${id};`,
+    db.query(query_String,
+      function (err, results) {
+        if (err) {
+          res.status(500).json(err);
+        }
+        res.status(200).json(results);
+      }
+    );
+  }
+  catch (err) {
+    console.log("Catch Error.", err)
+    res.status(500).json(err);
+  }
+});
+
+//-- POST a new employee to database. 
 router.post('/', async (req, res) => {
   // console.log(`Received post request: ${req.body}`)
   try {
     
-    var request = req.body;
-    // request.forEach( ([key, value]) => {
-    //   console.log("hi")
-    // });
-
-    for (var key in request){
-      console.log(`${key} : ${request[key]}`);
-    }
-    // for( i=0; i <= request.length; i++ ){
-    //   console.log(i)
-    // }
-    // console.log(`Received payload: ${JSON.stringify(req)}`)
     var id = req.body.id;
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
@@ -83,7 +115,6 @@ router.post('/', async (req, res) => {
 
 
 //-- Delete an employee by ID
-// TODO:: 01/29/2022 #EP | Add this query
 router.delete('/:id', async (req, res) => {
   try {
       // Query database for ALL employees with all columns
