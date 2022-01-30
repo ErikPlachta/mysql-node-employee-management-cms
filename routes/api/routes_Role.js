@@ -43,6 +43,46 @@ router.get('/:id', async (req, res) => {
 });
 
 
+//-- UPDATE an role based on payload
+router.put('/:id', async (req, res) => {
+  // console.log(`Received post request: ${req.body}`)
+  try {
+    
+    //-- Deconstructing to make code easier to read and use
+    const id = req.params.id; //-- get ID from url
+    const request = req.body; //-- pull payload
+    const length = Object.keys(request).length; //-- get number of things to update
+
+    //-- if received more than 1 change request, abort request
+    if (length > 1 ){
+      throw `ERROR: Update request rejected. Received ${length} change requests, only 1 is allowed. Please try again.`;
+    }
+    
+    //-- Used to hold query built in below for loop
+    var query_String = null;
+
+    //-- Extract payload and build query string
+    for( var key in request) {
+      query_String = `UPDATE role SET ${key} = '${request[key]}' WHERE id = ${id};`;
+    }
+    
+    //-- Attempt to update database with provided value
+    db.query(query_String, 
+      function (err, results) {
+        if (err) {
+          res.status(500).json(err);
+        }
+        res.status(200).json(results);
+      }
+    );
+  }
+  catch (err) {
+    console.log("Catch Error.", err)
+    res.status(500).json(err);
+  }
+});
+
+
 //-- create a role
 // TODO:: 01/29/2022 #EP | Add this query
 router.post('/', async (req, res) => {

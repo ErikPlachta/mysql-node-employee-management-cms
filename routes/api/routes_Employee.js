@@ -43,7 +43,6 @@ router.get('/:id', async (req, res) => {
 });
 
 
-
 //-- UPDATE an employee based on payload
 router.put('/:id', async (req, res) => {
   // console.log(`Received post request: ${req.body}`)
