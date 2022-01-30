@@ -9,13 +9,6 @@
 async function seedDatabase () {
   require('dotenv').config(); //-- for local variable caching
 
-  // const mysql = require('mysql2/promise');
-  // const pool = mysql.createPool({
-  //   host: process.env.SERVER_PATH,
-  //   user: process.env.DB_USER,
-  //   password: process.env.DB_PASSWORD
-  // });
-
   const db = require('./connection_mysql2')
   // execute in parallel, next console.log in 3 seconds
   try {
@@ -23,16 +16,15 @@ async function seedDatabase () {
       db.query('DROP DATABASE IF EXISTS employee_db'),
       db.query('select sleep(2)'),
       db.query('CREATE DATABASE employee_db'),
-      db.query('select sleep(2)')
-    ])
-  
-    await db.end();
-    return true;
-  
+    ]);
+    
+    await db.end(); //-- Close connection
+    return true; //-- return true as promise
   }
   catch (err) { 
-    console.log(err)
-    return false;
+    console.log(err);
+    await db.end(); //-- Close connection
+    return false; //-- return true as promise
   };
 
 }
@@ -126,7 +118,7 @@ async function seedTables() {
 const seed = async () => {
 
   seedDatabase()
-    .then( results => console.log(`//-- database creation results: ${results}`))
+    .then( results => console.log(`//-- database creation successful: ${results}`))
     .then(() => seedTables())
     .then( () => process.exit(0))
     //-- print error

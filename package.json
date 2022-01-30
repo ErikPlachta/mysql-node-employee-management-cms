@@ -1,6 +1,6 @@
 {
   "name": "mysql-node-employee-management-cms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A concept app built in Node and Inquirer to manage a local MySQL database via a CLI. To demonstrate this concept, I've built an app that can be used to manage a company's employees.",
   "main": "app.js",
   "directories": {
@@ -10,7 +10,8 @@
     "test": "jest",
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "seed": "node seeds/seed.js"
+    "seed": "node seeds/seed.js",
+    "app": "node ./app.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "inquirer": "^8.2.0",
     "jest": "^27.4.7",
     "mysql2": "^2.3.3",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.15",
     "sequelize": "^6.15.0"
   }
