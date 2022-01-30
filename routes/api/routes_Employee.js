@@ -42,38 +42,51 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-//-- UPDATE an employee
+
+
+//-- UPDATE an employee based on payload
 router.put('/:id', async (req, res) => {
   // console.log(`Received post request: ${req.body}`)
   try {
     
-    var id = req.params.id;
-    var request = req.body;
-
-    //-- grabbing what was sent in
-    var first_name = request.first_name;
-		var last_name = request.last_name;
-    var role_id = request.role_id;
-		var manager_id = request.manager_id;
-
+    //-- Deconstructing to make code easier to read and use
+    
+    var results = {};
+    
+    const id = req.params.id; //-- get ID from url
+    const request = req.body; //-- pull payload
+    const length = Object.keys(request).length; //-- get number of things to update
 		
-    // request.forEach( ([key, value]) => {
-    //   console.log("hi")
-    // });
-    var query_Holder = null;
-    console.log("//-- Received: ")
-    for (var key in request){
-      console.log(`//--\t ${key} : ${request[key]}`);
-      // console.log(`//-- UPDATE employee SET ${key} = ${request[key]} WHERE id = ${id}`);
+    //-- if received more than 1 change request
+    if (length > 1 ){
+      throw err;
     }
     
+    
+    var set_String = null;
+    console.log(`//-- Received ${length} results... `);
+
+    for( var key in request) {
+
+      set_String = `${key} = '${request[key]}'`;
+    }
+    
+  
+    
+    
+    console.log(set_String)
     // ;SELECT * FROM employee WHERE manager_id = ?";
     // var query_String = `SELECT first_name FROM employee WHERE id = ${id} AND SELECT last_name FROM employee where id = ${id};`;
-    var query_String = `SELECT * FROM employee WHERE id = ${id};`;
+
+    //-- Basic query that I know works
+    // var query_String = `SELECT * FROM employee WHERE id = ${id};`;
+
+    //-- String to hold an UPDATE query. Using ? wildcard, so modular
+    var query_String = `UPDATE employee SET ${key} = '${request[key]}' WHERE id = ${id};`;
     
     // db.query(`UPDATE employee set ${values});`,
     // db.query(`SELECT first_name FROM employee WHERE id = ${id};` `SELECT last_name FROM employee WHERE id = ${id};`,
-    db.query(query_String,
+    db.query(query_String, 
       function (err, results) {
         if (err) {
           res.status(500).json(err);
