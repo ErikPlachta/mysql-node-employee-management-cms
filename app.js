@@ -3,15 +3,18 @@
 // const {getEmployee, putEmployee} = require('./lib/queries.js');
 const { getEmployee, getEmployees, putEmployee, postEmployee, deleteEmployee } =  require('./lib/queries_Employee.js');
 
+
+
+
 //-- Getting an employee
-// getEmployee(1)
-// .then( results => console.log(`results: ${results}`))
+function test_Get(){
+  getEmployee(1)
+  .then( results => console.log(`results: ${results}`))
 
-// getEmployees()
-// .then( results => console.log(`results: ${results}`))
-
-
-
+  getEmployees()
+  .then( results => console.log(`results: ${results}`))
+}
+test_Get();
 
 
 
@@ -48,4 +51,3 @@ function test_Delete(){
   .then( results => console.log(`Updated: ${results}`))
 }
 
-test_Delete();
