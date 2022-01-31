@@ -36,6 +36,7 @@ const inquirer = require('inquirer');
 
 //-- For printing table results
 const cTable = require('console.table');
+const { get } = require('express/lib/response');
 //------------------------------------------------------------------------------
 //-- PROMPTING
 
@@ -134,11 +135,9 @@ MAIN MENU:
         response_JSON[key]["department_name"] = (results[0]['name']);
         delete response_JSON[key]['department_id'];
       })
-    }
+    };
 
     console.table((response_JSON))
-    // console.table(JSON.parse(response))
-    // console.table(response)
     
     var results = await inquirer.prompt([
       {
@@ -159,13 +158,70 @@ MAIN MENU:
 
   //-- Getting employees
   _getEmployees = async () => {
-    var response = await getEmployees()
+    var employees = await getEmployees()
     .then(response => {
       return response;
     })
     .catch(err => console.log(err));
+
+    // var roles = await getRoles()
+    // .then(response => {
+    //   return response;
+    // })
+    // .catch(err => console.log(err));
     
-    console.table(JSON.parse(response));
+
+     //-- build what's to be printed, using 2 queries to join data below
+     var employees_JSON = (JSON.parse(employees));
+
+     //-- loop through each response, and then add department name from query, removing id
+     for ( var key in employees_JSON) {
+       var jobTitle = await getRole(employees_JSON[key]['id'])
+       .then(response => {
+         return JSON.parse(response);
+       })
+       .then(results => {
+        // console.log(results) 
+        employees_JSON[key]["title"] = (results[0]['title']);
+        employees_JSON[key]["salary"] = (results[0]['salary']);
+       })
+
+      //-- THEN GET DEPARTMENT NAME
+       .then( () => {
+        // console.log(employees_JSON[key]['role_id'])
+        return getRole(employees_JSON[key]['role_id']);
+       })
+       .then(results => {
+        return (JSON.parse(results))
+        //  return getDepartment(results)
+      })
+      .then( results => {
+        return getDepartment(results[0]['department_id']);
+      })
+      .then( results => {
+        // console.log(JSON.parse(results)[0]['name'])
+        employees_JSON[key]["department"] = (JSON.parse(results)[0]['name']);
+        // delete employees_JSON[key]['role_id'];
+      })
+      //-- THEN GET MANAGER if has one
+      .then( () => {
+        return getEmployee(employees_JSON[key]['manager_id'])
+      })
+      .then(results => {
+        
+        //-- if a manager is defined, add to column
+        if(results != false) {
+          var managerName = `${JSON.parse(results)[0]['first_name']} ${JSON.parse(results)[0]['last_name']}`;
+          // console.log(managerName)
+          employees_JSON[key]['manager_name'] = managerName
+        }
+        //-- always delete no matter what.
+        delete employees_JSON[key]['manager_id'];
+      })
+     };
+ 
+     console.table((employees_JSON))
+    // console.table(JSON.parse(response));
     
     var results = await inquirer
       .prompt([
