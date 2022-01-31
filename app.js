@@ -45,56 +45,72 @@ class Init {
   //--------------------------------------------------------------------------
   //-- Getting User Data
 
-  //-- Function that asks employee details
-  // _get_EmployeeBasics = () => { 
-  _get_MainMenu = () => {
-    //-- Uses inquirer.js to prompt user specific details.
-
-    console.log(`
+  
+  //-- Printing app name and my name
+  _get_AppBranding = () => {
+      console.log(`
  ______________________________________________________________________________
 ||----------------------------------------------------------------------------||
 ||                      Employee Management System                            ||
-||                                                                            ||
+||                    ------------------------------                          ||
 ||                            By Erik Plachta                                 ||
 ||                                                                            ||
 ||----------------------------------------------------------------------------||
 ||----------------------------------------------------------------------------||
-`);
+`)
+  }
+  
+  _get_MainMenu = async () => {
+    //-- Uses inquirer.js to prompt user specific details.   
 
-console.log(`
+    console.log(`
 MAIN MENU:
-`);
+    `);
       
-      return inquirer
-        .prompt([
-
-          //-- Name
-          {
-            type: 'list',
-            name: 'menu_choice',
-            message: 'Please select an operation: ',
-            choices: [
-              "1. View all Departments",
-              "2. View all Roles",
-              "3. View all Employees",
-              "4. Add a Department",
-              "5. Add a Role",
-              "6. Add an Employee",
-              "7. Update an Employee Role"
-            ]
-          }
-        ])
+    var results = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'mainMenu',
+        message: 'Please select an operation: ',
+        choices: [
+          "1. View all Departments",
+          "2. View all Roles",
+          "3. View all Employees",
+          "4. Add a Department",
+          "5. Add a Role",
+          "6. Add an Employee",
+          "7. Update an Employee Role",
+          "0. Exit"
+        ]
+      }
+    ]);
+    this._validateRoute_Choice(results);
   };  //-- END OF _get_MainMenu
 
   
   _getDepartments = async () => {  
+    console.log("\nDEPARTMENTS:\n\nHere is a list of your departments...\n")
     var response = await getDepartments()
     .then(response => {
       return response;
     })
     .catch(err => console.log(err));
-    return response;
-  }
+    
+    console.table(JSON.parse(response));
+    
+    var results = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'viewMenu',
+        message: 'What would you like to do?: ',
+        choices: [
+          "1. Back to Main Menu",
+          "0. Exit" 
+        ]
+      }
+    ]);
+    this._validateRoute_Choice(results);
+  };
 
   _getRoles = async () => {
     var response = await getRoles()
@@ -102,7 +118,24 @@ MAIN MENU:
       return response;
     })
     .catch(err => console.log(err));
-    return response;
+    
+
+    console.table(JSON.parse(response))
+    
+    var results = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'viewMenu',
+        message: 'What would you like to do?: ',
+        choices: [
+          "1. Back to Main Menu",
+          "0. Exit"
+          
+        ]
+      }
+    ]);
+
+    this._validateRoute_Choice(results);
   }
 
   _getEmployees = async () => {
@@ -111,23 +144,62 @@ MAIN MENU:
       return response;
     })
     .catch(err => console.log(err));
-    return response;
+    
+    console.table(JSON.parse(response));
+    
+    var results = await inquirer
+      .prompt([
+
+        //-- Name
+        {
+          type: 'list',
+          name: 'viewMenu',
+          message: 'What would you like to do?: ',
+          choices: [
+            "1. Back to Main Menu",
+            "0. Exit"
+            
+          ]
+        }
+      ]);
+    this._validateRoute_Choice(results);
   };
 
-  _postDepartment = (data) => {
+  _postDepartment = async (data) => {
 
   }
-  _postRole = (data) => {
+  _postRole = async  (data) => {
 
   }
-  _postEmployee = (data) => {
+  _postEmployee = async (data) => {
 
   }
-  _putEmployee = (id,data) => {
+  _putEmployee = async (id,data) => {
 
   }
+
+  _exit = async () => {
+    var results = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'exitMenu',
+        message: 'Are you sure?: '
+      }
+    ]);
+    this._validateRoute_Choice(results);
+  };
+
+  exitMenu = {
+    1: this._get_MainMenu
+  };
+
+  viewMenu = {
+    0: this._exit,
+    1: this._get_MainMenu
+  };
 
   mainMenu = {
+    0: this._exit,
     1: this._getDepartments,
     2: this._getRoles,
     3: this._getEmployees,
@@ -137,67 +209,67 @@ MAIN MENU:
     7: this._putEmployee,
   };
 
-  //----------------------------------------------------------------------------
-  //----------------------------------------------------------------------------
-  //-- Primary function that runs the app
-  _manage_Employees = async function() { 
 
-  
-    //-- Get user specific info
-    this._get_MainMenu()
-      .then(results => {
-        console.log(results);
-        
-        var choice =''; //-- to hold number choice
-        //-- extract just the number from the list
-        for(var key in results) {
-          choice = (results[key]).split(".")[0];
-        }
-        return choice;
-      })
-      .then(choice => {
-        return (this.mainMenu[choice])();
-      })
-      .then(results => {
-        
-        console.table(JSON.parse(results))
-        
-      })
+
+  //-- takes choice and verifies what to do next
+  _validateRoute_Choice = async function(results) { 
+    var location = ''; //-- to hold the key, which is the menu name
+    var number =''; //-- to hold number choice
+    
+    // console.log(`Results: ${JSON.stringify(results)}`)
+    //-- extract just the number from the list
+    
+    for(var key in results) {
+      location = key;
       
+      if(location != 'exitMenu'){
+        number = (results[key]).split(".")[0];
+      } 
+      else {
+        if(results[key] == false){
+          number = 1;
+        } else {
+          console.log("Goodbye!")
+          process.exit(0);
+        }
+      }
+    }
+    
+    console.log("Location and number choice:", location, number)
+    
+    if(location === 'mainMenu'){
+      return (this.mainMenu[number])();
+    } 
+    else if (location === 'viewMenu') {
+      return (this.viewMenu[number])();
+    }
+    if(location === 'exitMenu'){
+      // console.log("Exit Menu validation",number)
+      return (this.exitMenu[number])();
+    }
+    else {
+      console.log("ERROR: Taking back to main menu...")
+      this._get_MainMenu();
+    }
 
-    .catch( err => {
-      console.log(`Error: ${err}`);
-    });
-  };
 
+  };  
 
   //----------------------------------------------------------------------------
-  //-- makes template then creates file
-
-  _BuildingContent = () => { 
-
-    //-- Build the HTML content
-    let template = this.set_TeamTemplate(this.teamData_Dict);
-    // console.log(template);
-    set_writeTeamFile(template)
-     .then(write_Response => {
-        console.log(write_Response);
-      })
-      //-- if it fails any-step along the way, catch error nd log here.
-      .catch(err => {
-        console.log("ERROR: ", err);
-      });
-  };
+  //----------------------------------------------------------------------------
   
-
    //-- Runs program
-   run(){
+   run  = async function() { 
     //-- Starts the APP by kicking off team builder
     
-    this._manage_Employees()
-  
+     //-- print header
+     this._get_AppBranding()
+     //-- Get user specific info
+     this._get_MainMenu()
+     .catch( err => {
+       console.log(`Error: ${err}`);
+     });
   };
-
 }; 
 
 
