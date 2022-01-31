@@ -95,9 +95,11 @@ MAIN MENU:
       return response;
     })
     .catch(err => console.log(err));
-    
+
+    //-- print results
     console.table(JSON.parse(response));
     
+    //-- prompt user on next step
     var results = await inquirer.prompt([
       {
         type: 'list',
@@ -119,8 +121,24 @@ MAIN MENU:
     })
     .catch(err => console.log(err));
     
+    //-- build what's to be printed, using 2 queries to join data below
+    var response_JSON = (JSON.parse(response));
 
-    console.table(JSON.parse(response))
+    //-- loop through each response, and then add department name from query, removing id
+    for ( var key in response_JSON) {
+      var departmentName = await getDepartment(response_JSON[key]['department_id'])
+      .then(response => {
+        return JSON.parse(response);
+      })
+      .then(results => {
+        response_JSON[key]["department_name"] = (results[0]['name']);
+        delete response_JSON[key]['department_id'];
+      })
+    }
+
+    console.table((response_JSON))
+    // console.table(JSON.parse(response))
+    // console.table(response)
     
     var results = await inquirer.prompt([
       {
@@ -135,9 +153,11 @@ MAIN MENU:
       }
     ]);
 
+    //-- Validate choice and redirect user based on choice
     this._validateRoute_Choice(results);
   }
 
+  //-- Getting employees
   _getEmployees = async () => {
     var response = await getEmployees()
     .then(response => {
