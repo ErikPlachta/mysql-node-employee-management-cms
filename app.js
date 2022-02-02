@@ -272,6 +272,10 @@ MAIN MENU:
     Updating an Employee Role: 
     `)
 
+
+    //--------------------------------------------------------------------------
+    //-- Getting Data
+
     //-- Get Employees from DB
     var employees = await getEmployees()
     .then(response => {
@@ -287,9 +291,12 @@ MAIN MENU:
     .catch(err => console.log(err));
     // console.log(roles)
 
+    //--------------------------------------------------------------------------
+    //-- Building Choice List
     
-    var employees_list = []; //-- holds list to give for choice below
 
+    //-- Building EMPLOYEES Choice List with Department  Names
+    var employees_list = []; //-- holds list to give for choice below
     //-- Extract values and build list for choice
     for(var employee in employees ){
       
@@ -304,13 +311,27 @@ MAIN MENU:
       for (var key in roles[id]) {
         if(key == 'title') {
             r_t = roles[id][key];
-        };
-        
+        }; 
       }
-
-      //-- Built string for CLI
+      
+      //-- Built string for CLI with ROLE and employee info
       employees_list.push(`${id}. ${fn} ${ln}\n\tCurrent Role ID: ${r_id}\n\tCurrent Role Title: ${r_t}`);
     }
+
+
+    //-- Building ROLES Choice List
+    var roles_list = []; //-- holds list to give for choice below
+    for (var key in roles) {
+      var id = roles[key].id;
+      // var s =  roles[key].salary;
+      var t = roles[key].title;
+      // var did = roles[key].department_id;
+      
+      roles_list.push(`${id}.\t Title: ${t} `)
+    }
+
+    //--------------------------------------------------------------------------
+    //-- CLI
 
     //-- prompt user choice menu
     var results = await inquirer.prompt([
@@ -319,6 +340,12 @@ MAIN MENU:
         name: 'putMenu_id',
         message: 'Which Employee will you be updating?: ',
         choices: employees_list,
+      },
+      {
+        type: 'list',
+        name: 'putMenu_role',
+        message: 'Which role will they be changing to?: ',
+        choices: roles_list,
       }
     ]);
 
