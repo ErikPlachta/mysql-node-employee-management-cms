@@ -50,17 +50,18 @@ class Init {
   //-- Printing app name and my name
   _get_AppBranding = () => {
       console.log(`
- ______________________________________________________________________________
-||----------------------------------------------------------------------------||
-||                      Employee Management System                            ||
-||                    ------------------------------                          ||
-||                            By Erik Plachta                                 ||
-||                                                                            ||
-||----------------------------------------------------------------------------||
-||----------------------------------------------------------------------------||
+ ________________________________________________
+||----------------------------------------------||
+||       Employee Management System             ||
+||     ------------------------------           ||
+||             By Erik Plachta                  ||
+||                                              ||
+||----------------------------------------------||
+||----------------------------------------------||
 `)
   }
   
+  //-- Main Menu Default page
   _get_MainMenu = async () => {
     //-- Uses inquirer.js to prompt user specific details.   
 
@@ -89,6 +90,8 @@ MAIN MENU:
   };  //-- END OF _get_MainMenu
 
   
+  //-- query to get ALL DEPARTMENTS from db
+  //-- Main Menu #1
   _getDepartments = async () => {  
     console.log("\nDEPARTMENTS:\n\nHere is a list of your departments...\n")
     var response = await getDepartments()
@@ -115,7 +118,10 @@ MAIN MENU:
     this._validateRoute_Choice(results);
   };
 
+  //-- query to get ALL ROLES from db, + joinng Department Name and removing Department ID
+  //-- Main Menu #2
   _getRoles = async () => {
+    
     var response = await getRoles()
     .then(response => {
       return response;
@@ -126,7 +132,7 @@ MAIN MENU:
     var response_JSON = (JSON.parse(response));
 
     //-- loop through each response, and then add department name from query, removing id
-    for ( var key in response_JSON) {
+    for ( var key in response_JSON ) {
       var departmentName = await getDepartment(response_JSON[key]['department_id'])
       .then(response => {
         return JSON.parse(response);
@@ -146,8 +152,7 @@ MAIN MENU:
         message: 'What would you like to do?: ',
         choices: [
           "1. Back to Main Menu",
-          "0. Exit"
-          
+          "0. Exit" 
         ]
       }
     ]);
@@ -157,6 +162,7 @@ MAIN MENU:
   }
 
   //-- Getting employees
+  //-- Main Menu #3
   _getEmployees = async () => {
     var employees = await getEmployees()
     .then(response => {
@@ -241,19 +247,85 @@ MAIN MENU:
     this._validateRoute_Choice(results);
   };
 
+  //-- Used to create a new department
+    //-- Main Menu #4
   _postDepartment = async (data) => {
 
   }
+  
+  //-- Used to create a new Role
+  //-- Main Menu #5
   _postRole = async  (data) => {
 
   }
+  
+  //-- Used to create a new employee
+  //-- Main Menu #6
   _postEmployee = async (data) => {
 
   }
-  _putEmployee = async (id,data) => {
 
+  //-- Used to update Employee Role
+  //-- Main Menu #7
+  _putEmployee = async (id,data) => {
+    console.log(`
+    Updating an Employee Role: 
+    `)
+
+    //-- Get Employees from DB
+    var employees = await getEmployees()
+    .then(response => {
+      return JSON.parse(response);
+    })
+    .catch(err => console.log(err));
+
+    //-- Get Employees from DB
+    var roles = await getRoles()
+    .then(response => {
+      return JSON.parse(response);
+    })
+    .catch(err => console.log(err));
+    // console.log(roles)
+
+    
+    var employees_list = []; //-- holds list to give for choice below
+
+    //-- Extract values and build list for choice
+    for(var employee in employees ){
+      
+      //-- DECONSTRUCTORS
+      const id = employees[employee].id;
+      const fn = employees[employee].first_name;
+      const ln = employees[employee].last_name;
+      
+      //-- Get Role ID and then use it to grab title
+      const r_id = employees[employee].role_id;
+      var r_t = '';
+      for (var key in roles[id]) {
+        if(key == 'title') {
+            r_t = roles[id][key];
+        };
+        
+      }
+
+      //-- Built string for CLI
+      employees_list.push(`${id}. ${fn} ${ln}\n\tCurrent Role ID: ${r_id}\n\tCurrent Role Title: ${r_t}`);
+    }
+
+    //-- prompt user choice menu
+    var results = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'putMenu_id',
+        message: 'Which Employee will you be updating?: ',
+        choices: employees_list,
+      }
+    ]);
+
+    this._validateRoute_Choice(results);
   }
 
+  //-- #0
   _exit = async () => {
     var results = await inquirer.prompt([
       {
