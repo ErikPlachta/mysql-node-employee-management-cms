@@ -181,49 +181,58 @@ MAIN MENU:
      var employees_JSON = (JSON.parse(employees));
 
      //-- loop through each response, and then add department name from query, removing id
-     for ( var key in employees_JSON) {
-       var jobTitle = await getRole(employees_JSON[key]['id'])
-       .then(response => {
-         return JSON.parse(response);
-       })
-       .then(results => {
-        // console.log(results) 
-        employees_JSON[key]["title"] = (results[0]['title']);
-        employees_JSON[key]["salary"] = (results[0]['salary']);
-       })
+     for ( var key in employees_JSON ) {
+        var jobTitle = await getRole(employees_JSON[key]['role_id'])
+          .then(response => {
+            console.log(key, employees_JSON[key])
+            return JSON.parse(response);
+          })
+          .then(results => {
+            console.log(`results: ${JSON.stringify(results)}`) 
+            try{
+              employees_JSON[key]["title"] = (results[0]['title']);
+              employees_JSON[key]["salary"] = (results[0]['salary']);
+            }
+            catch {
+              employees_JSON[key]["title"] = (results['title']);
+              employees_JSON[key]["salary"] = (results['salary']);
+            }
+          })
 
-      //-- THEN GET DEPARTMENT NAME
-       .then( () => {
-        // console.log(employees_JSON[key]['role_id'])
-        return getRole(employees_JSON[key]['role_id']);
-       })
-       .then(results => {
-        return (JSON.parse(results))
-        //  return getDepartment(results)
-      })
-      .then( results => {
-        return getDepartment(results[0]['department_id']);
-      })
-      .then( results => {
-        // console.log(JSON.parse(results)[0]['name'])
-        employees_JSON[key]["department"] = (JSON.parse(results)[0]['name']);
-        // delete employees_JSON[key]['role_id'];
-      })
-      //-- THEN GET MANAGER if has one
-      .then( () => {
-        return getEmployee(employees_JSON[key]['manager_id'])
-      })
-      .then(results => {
-        
-        //-- if a manager is defined, add to column
-        if(results != false) {
-          var managerName = `${JSON.parse(results)[0]['first_name']} ${JSON.parse(results)[0]['last_name']}`;
-          // console.log(managerName)
-          employees_JSON[key]['manager_name'] = managerName
-        }
-        //-- always delete no matter what.
-        delete employees_JSON[key]['manager_id'];
-      })
+          //-- THEN GET DEPARTMENT NAME
+          .then( () => {
+            // console.log(employees_JSON[key]['role_id'])
+            return getRole(employees_JSON[key]['role_id']);
+          })
+          .then(results => {
+            // console.log(results)
+            return (JSON.parse(results))
+            //  return getDepartment(results)
+          })
+          .then( results => {
+            // console.log(results)
+            return getDepartment(results[0]['department_id']);
+          })
+          .then( results => {
+            // console.log(JSON.parse(results)[0]['name'])
+            employees_JSON[key]["department"] = (JSON.parse(results)[0]['name']);
+            // delete employees_JSON[key]['role_id'];
+          })
+          //-- THEN GET MANAGER if has one
+          .then( () => {
+            return getEmployee(employees_JSON[key]['manager_id'])
+          })
+          .then(results => {
+            
+            //-- if a manager is defined, add to column
+            if(results != false) {
+              var managerName = `${JSON.parse(results)[0]['first_name']} ${JSON.parse(results)[0]['last_name']}`;
+              // console.log(managerName)
+              employees_JSON[key]['manager_name'] = managerName
+            }
+            //-- always delete no matter what.
+            delete employees_JSON[key]['manager_id'];
+          })
      };
  
      console.table((employees_JSON))
