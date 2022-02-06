@@ -251,7 +251,8 @@ MAIN MENU:
             "0. Exit"
             
           ]
-        }
+        },
+
       ]);
     this._validateRoute_Choice(results);
   };
@@ -259,7 +260,30 @@ MAIN MENU:
   //-- Used to create a new department
     //-- Main Menu #4
   _postDepartment = async (data) => {
-
+    console.log(`
+Add a Department:
+    `);
+      
+    var results = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter a Department Name: ',
+        validate: departmentName => {
+          if(departmentName){
+            postDepartment( { "name": departmentName} )
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+      },
+    ]);
+    console.log(`Created new Department: ${results.departmentName}!`);
+    console.log(`\nLoading Main Menu...`)  
+    // console.log(results)
+    this._get_MainMenu();
   }
   
   //-- Used to create a new Role
