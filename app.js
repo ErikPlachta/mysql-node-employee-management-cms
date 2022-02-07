@@ -261,7 +261,7 @@ MAIN MENU:
     //-- Main Menu #4
   _postDepartment = async (data) => {
     console.log(`
-Add a Department:
+Add a New Department:
     `);
       
     var results = await inquirer.prompt([
@@ -282,7 +282,6 @@ Add a Department:
     ]);
     console.log(`Created new Department: ${results.departmentName}!`);
     console.log(`\nLoading Main Menu...`)  
-    // console.log(results)
     this._get_MainMenu();
   }
   
@@ -290,12 +289,153 @@ Add a Department:
   //-- Main Menu #5
   _postRole = async  (data) => {
 
+    var departments_List = []; //-- holds list to give for choice below
+    
+    let departments = getDepartments()
+    .then( departments => JSON.parse(departments))
+    .then(departments => {
+
+      for (var key in departments) {
+        // console.log(departments[key])
+        var id = departments[key].id;
+        var name = departments[key].name;
+        
+        departments_List.push(`${id}.\t Name: ${name} `)
+      }
+    })
+
+    console.log(`
+    Add a new Role:
+        `);
+          
+        var results = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'title',
+            message: 'Enter a Role Title: ',
+            validate: title => {
+              if(title){
+                return true;
+              }
+              else {
+                return false;
+              }
+            }
+          },
+          {
+            type: 'input',
+            name: 'salary',
+            message: 'Enter a Role Salary: ',
+            validate: salary => {
+              if ( isNaN(parseInt(salary)) == true ) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+          },
+          {
+            type: 'list',
+            name: 'department_id',
+            message: 'Enter a Department ID Associated to this role: ',
+            choices: departments_List,
+          },
+        ]);
+        
+        postRole(results)
+        console.log(`Created new Role: ${results}!`);
+
+        //---
+        console.log(`\nLoading Main Menu...`)  
+        this._get_MainMenu();
+
   }
   
   //-- Used to create a new employee
   //-- Main Menu #6
   _postEmployee = async (data) => {
+    
+    let roles_List = [];
+    let roles = getRoles()
+    .then( roles => JSON.parse(roles))
+    .then(roles => {
 
+      for (var key in roles) {
+        // console.log(departments[key])
+        var id = roles[key].id;
+        var title = roles[key].title;
+        
+        roles_List.push(`${id}.\t Role: ${title} `)
+      }
+    });
+
+    let employees_List = [];
+    let employees = getEmployees()
+    .then( employees => JSON.parse(employees))
+    .then(employees => {
+
+      for (var key in employees) {
+        // console.log(departments[key])
+        var id = employees[key].id;
+        var name = `${employees[key].first_name} ${employees[key].last_name}`;
+        
+        employees_List.push(`${id}.\t Name: ${name} `)
+      }
+    });
+
+    //-- MENU FOR PROMPTS
+    console.log(`
+    Add a new Employee:
+        `);
+          
+        var results = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'first_name',
+            message: 'Enter a First Name: ',
+            validate: first_name => {
+              if(first_name){
+                return true;
+              }
+              else {
+                return false;
+              }
+            }
+          },
+          {
+            type: 'input',
+            name: 'last_name',
+            message: 'Enter a Last Name: ',
+            validate: last_name => {
+              if(!last_name) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+          },
+          {
+            type: 'list',
+            name: 'role_id',
+            message: 'Select a Role associated to this employee: ',
+            choices: roles_List,
+          },
+          {
+            type: 'list',
+            name: 'manager_id',
+            message: 'Select a manager associated to this employee: ',
+            choices: employees_List,
+          },
+        ]);
+        
+        postEmployee(results)
+        console.log(`Created new Department: ${results.departmentName}!`);
+
+        //---
+        console.log(`\nLoading Main Menu...`)  
+        this._get_MainMenu();
   }
 
   //-- Used to update Employee Role
@@ -304,7 +444,6 @@ Add a Department:
     console.log(`
     Updating an Employee Role: 
     `)
-
 
     //--------------------------------------------------------------------------
     //-- Getting Data
