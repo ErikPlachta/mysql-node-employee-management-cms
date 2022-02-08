@@ -3,10 +3,6 @@
 This is a concept app built on Node.js, using Inquirer.js to provide a CLI that 
 can manage a local MySQL database.
 
-> Last Updated: 01/29/2022
-
-## Active Under Development
-
 ---
 
 ## Index
