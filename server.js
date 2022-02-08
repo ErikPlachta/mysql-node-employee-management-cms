@@ -9,13 +9,10 @@ const routes = require('./routes');
 //TODO:: 01/29/2022 #EP || Remove Sequelize once done learning
 // const sequelize = require('./config/connection'); 
 
-// Import and require mysql2
-const mysql = require('mysql2');
-
 //------------------------------------------------------------------------------
 //-- Setup Express
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || process.env.MY_PORT;
 
 //-- make sure can read JSON and manage properly
 app.use(express.json());

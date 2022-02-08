@@ -92,15 +92,28 @@ router.post('/', async (req, res) => {
     var last_name = req.body.last_name;
     var role_id = req.body.role_id;
     var manager_id = req.body.manager_id;
-    // Query database for ALL employees with all columns
-    db.query(`INSERT INTO employee (id, first_name, last_name,role_id, manager_id) VALUES (${id}, '${first_name}', '${last_name}', ${role_id}, ${manager_id});`,
-    function (err, results) {
-      if (err) {
-        res.status(500).json(err);
-      }
-      res.status(200).json(results);
-    });
+    if (id){
+    
+      // Query database for ALL employees with all columns
+      db.query(`INSERT INTO employee (id, first_name, last_name,role_id, manager_id) VALUES (${id}, '${first_name}', '${last_name}', ${role_id}, ${manager_id});`,
+      function (err, results) {
+        if (err) {
+          res.status(500).json(err);
+        }
+        res.status(200).json(results);
+      });
+    }
+    else {
+      db.query(`INSERT INTO employee (first_name, last_name,role_id, manager_id) VALUES ('${first_name}', '${last_name}', ${role_id}, ${manager_id});`,
+      function (err, results) {
+        if (err) {
+          res.status(500).json(err);
+        }
+        res.status(200).json(results);
+      });
+    }
   }
+  // -- otherwise catch
   catch (err) {
     console.log("Catch Error.", err)
     res.status(500).json(err);

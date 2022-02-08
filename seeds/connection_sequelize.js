@@ -1,6 +1,6 @@
 //-- IMPORTS
-const Sequelize = require('sequelize');
-require('dotenv').config();
+const Sequelize = require('sequelize'); // for drop add tables in employee_db
+require('dotenv').config(); //-- for local variable caching
 
 //-- MAKE sequelize obj to play as ORM
 const sequelize = new Sequelize(
@@ -11,7 +11,8 @@ const sequelize = new Sequelize(
     host: 'localhost',
     dialect: 'mysql',
     port: 3306
-  }
+  },
+  console.log(`//-- Connection MYSQL database with npm package Sequelize success!`)
 );
 
 //-- exporting created sequelize obj

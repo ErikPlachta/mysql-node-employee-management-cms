@@ -2,134 +2,50 @@
     {
       "id": 1,
       "first_name": "Mrs.",
-      "last_name" : "COO",
+      "last_name" : "Owner",
       "role_id" : 1,
-      "manager_id" : 7
+      "manager_id" : null
     },
     {
         "id": 2,
         "first_name": "Mr.",
-        "last_name" : "CMO",
+        "last_name" : "Manager",
         "role_id" : 2,
-        "manager_id" : 7
+        "manager_id" : 1
     },
     {
         "id": 3,
         "first_name": "Mrs.",
-        "last_name" : "CFO",
-        "role_id" : 3,
-        "manager_id" : 7
-    },
-    {
-        "id": 4,
-        "first_name": "Mr.",
-        "last_name" : "CIO",
+        "last_name" : "Manager",
         "role_id" : 4,
         "manager_id" : 1
     },
     {
+        "id": 4,
+        "first_name": "Mr.",
+        "last_name" : "Employee 1",
+        "role_id" : 3,
+        "manager_id" : 2
+    },
+    {
         "id": 5,
-        "first_name": "Mrs.",
-        "last_name" : "CTO",
-        "role_id" : 5,
-        "manager_id" : 1
+        "first_name": "Mr.",
+        "last_name" : "Employee 2",
+        "role_id" : 3,
+        "manager_id" : 2
     },
     {
         "id": 6,
-        "first_name": "Mr.",
-        "last_name" : "CCO",
+        "first_name": "Mrs.",
+        "last_name" : "Employee 3",
         "role_id" : 5,
-        "manager_id" : 1
+        "manager_id" : 3
     },
     {
         "id": 7,
         "first_name": "Mrs.",
-        "last_name" : "CEO",
-        "role_id" : 7,
-        "manager_id" : null
-    },
-    {
-        "id": 8,
-        "first_name": "Mr.",
-        "last_name" : "IT Engineer",
-        "role_id" : 8,
-        "manager_id" : 9
-    },
-    {
-        "id": 9,
-        "first_name": "Mr.",
-        "last_name" : "IT Department Manager",
-        "role_id" : 9,
-        "manager_id" : 5
-    },
-    {
-        "id": 10,
-        "first_name": "Mr.",
-        "last_name" : "Marketing Engineer",
-        "role_id" : 10,
-        "manager_id" : 11
-    },
-    {
-        "id": 11,
-        "first_name": "Mrs.",
-        "last_name" : "Marketing Department Manager",
-        "role_id" : 11,
-        "manager_id" : 6
-    },
-    {
-        "id": 12,
-        "first_name": "Mr.",
-        "last_name" : "Sales Represenative",
-        "role_id" : 12,
-        "manager_id" : 13
-    },
-    {
-        "id": 13,
-        "first_name": "Mrs.",
-        "last_name" : "Sales Department Manager",
-        "role_id" : 13,
-        "manager_id" : 6
-    },
-    {
-        "id": 14,
-        "first_name": "Mrs.",
-        "last_name" : "Customer Success Department Manager",
-        "role_id" : 15,
-        "manager_id" : 6
-    },
-    {
-        "id": 15,
-        "first_name": "Mrs.",
-        "last_name" : "Customer Success Manager",
-        "role_id" : 14,
-        "manager_id" : 14
-    },
-    {
-        "id": 16,
-        "first_name": "Mr.",
-        "last_name" : "Fulfillment Department Manager",
-        "role_id" : 17,
-        "manager_id" : 6
-    },
-    {
-        "id": 17,
-        "first_name": "Mrs.",
-        "last_name" : "Fulfillment Represeneative",
-        "role_id" : 16,
-        "manager_id" : 16
-    },
-    {
-        "id": 18,
-        "first_name": "Mr.",
-        "last_name" : "Accounting Represeneative",
-        "role_id" : 18,
-        "manager_id" :19
-    },
-    {
-        "id": 19,
-        "first_name": "Mrs.",
-        "last_name" : "Accounting Department Manager",
-        "role_id" : 19,
+        "last_name" : "Employee 4",
+        "role_id" : 5,
         "manager_id" : 3
     }
 ]

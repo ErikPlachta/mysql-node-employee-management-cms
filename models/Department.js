@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../seeds/connection');
+const sequelize = require('../seeds/connection_sequelize');
 
 //-- Creating Employee class, and extending Model from Class Sequelize
 class Department extends Model {};
@@ -9,7 +9,7 @@ Department.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
