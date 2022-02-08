@@ -51,10 +51,79 @@ and provide a CLI.
 easy-to-read SQL query results from the MySQL database.
 - [jest](https://www.npmjs.com/package/jest) is used for testing, and for [TDD](https://www.guru99.com/test-driven-development.html).
 
+---
 
 ## Useage
 
-> How to use this app ( under dev ).
+To learn how to use this APP, follow the below steps.
+> If you prefer, you can also follow along with [this video]().
+
+1. [Download App](#download-app)
+2. [Install Node Packages](#install-node-packages)
+3. [Update .env file](#update-env-file)
+4. [Import seed database](#import-seed-database)
+5. [Start Express Server](#tart-Express-Server)
+6. [Start Application](#start-application)
+
+
+---
+
+### 1. Download App
+
+> To use this app, you'll need to download the repo locally.
+
+[Link to download, here](https://github.com/ErikPlachta/mysql-node-employee-management-cms/archive/refs/heads/main.zip)
+
+### 2. Install Node Packages
+
+> Next, you'll need to install the Node package dependencies.
+
+```bash
+npm i;
+```
+
+### 3. Update .env file
+
+> Change the filename of `RENAME.env`  to `.env`, open it, and then add your
+> username and password for your MySQL server connection.
+
+```env
+DB_USER=YourUsername
+DB_PASSWORD=YourPassword
+DB_NAME=employee_db
+
+MY_PORT=3001
+SERVER_PATH=localhost
+```
+
+### 4. Import seed database
+
+> For this step, you'll be importing the seed-database that I've created to use 
+> the APP.
+
+```bash
+npm run seed;
+```
+
+### 5. Start Express Server
+
+> Once your database is setup, you'll need to start the express.js server
+
+```bash
+npm start;
+```
+
+### 6. Start Application
+
+> Run the app.js file to get started.
+
+```bash
+npm run app;
+```
+
+### 7 Follow Prompts
+
+> Lastly, to use the application just follow the prompts on the screen.
 
 ---
 

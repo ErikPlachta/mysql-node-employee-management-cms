@@ -184,11 +184,11 @@ MAIN MENU:
      for ( var key in employees_JSON ) {
         var jobTitle = await getRole(employees_JSON[key]['role_id'])
           .then(response => {
-            console.log(key, employees_JSON[key])
+            // console.log(key, employees_JSON[key])
             return JSON.parse(response);
           })
           .then(results => {
-            console.log(`results: ${JSON.stringify(results)}`) 
+            // console.log(`results: ${JSON.stringify(results)}`) 
             try{
               employees_JSON[key]["title"] = (results[0]['title']);
               employees_JSON[key]["salary"] = (results[0]['salary']);
