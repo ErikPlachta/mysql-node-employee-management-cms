@@ -342,7 +342,10 @@ Add a New Department:
             choices: departments_List,
           },
         ]);
-        
+
+        //-- get just the number of ID
+        results.department_id = results.department_id.split(".")[0];
+        // console.log(results)
         postRole(results)
         console.log(`Created new Role: ${results}!`);
 
@@ -430,8 +433,12 @@ Add a New Department:
           },
         ]);
         
+        //-- grabbing just ID values
+        results.role_id = results.role_id.split(".")[0]
+        results.manager_id = results.manager_id.split(".")[0]
+        console.log(results)
         postEmployee(results)
-        console.log(`Created new Department: ${results.departmentName}!`);
+        console.log(`Created new Employee: ${results.first_name} ${results.last_name}!`);
 
         //---
         console.log(`\nLoading Main Menu...`)  
@@ -509,21 +516,32 @@ Add a New Department:
     var results = await inquirer.prompt([
       {
         type: 'list',
-        name: 'putMenu_id',
+        name: 'id',
         message: 'Which Employee will you be updating?: ',
         choices: employees_list,
       },
       {
         type: 'list',
-        name: 'putMenu_role',
+        name: 'role_id',
         message: 'Which role will they be changing to?: ',
         choices: roles_list,
       }
     ]);
 
-    this._validateRoute_Choice(results);
-  }
+    //-- grabbing just ID values
+    let employee_id = results.id.split(".")[0]
+    let new_role_id = results.role_id.split(".")[0]
+    console.log(results)
+    putEmployee(employee_id,{"role_id": new_role_id})
+    console.log(`Created new Employee: ${results.first_name} ${results.last_name}!`);
 
+    //-- 
+    console.log(`\nLoading Main Menu...`)  
+    this._get_MainMenu();
+  };
+
+
+  //-- EXIT MENU WITH PROMPT
   //-- #0
   _exit = async () => {
     var results = await inquirer.prompt([
@@ -535,6 +553,10 @@ Add a New Department:
     ]);
     this._validateRoute_Choice(results);
   };
+
+
+  //----------------------------------------------------------------------------
+  //-- Menu Dictionaries for navigation with Inquirer
 
   exitMenu = {
     1: this._get_MainMenu
@@ -557,6 +579,8 @@ Add a New Department:
   };
 
 
+  //----------------------------------------------------------------------------
+  //-- Managing navigational choices
 
   //-- takes choice and verifies what to do next
   _validateRoute_Choice = async function(results) { 
@@ -582,7 +606,7 @@ Add a New Department:
       }
     }
     
-    console.log("Location and number choice:", location, number)
+    // console.log("Location and number choice:", location, number)
     
     if(location === 'mainMenu'){
       return (this.mainMenu[number])();
